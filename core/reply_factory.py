@@ -32,7 +32,17 @@ def record_current_answer(answer, current_question_id, session):
     '''
     Validates and stores the answer for the current question to django session.
     '''
-    return True, ""
+    # Get the correct answer for the current question
+    correct_answer = PYTHON_QUESTION_LIST[current_question_id][1]
+
+    # Check if the user's answer matches the correct answer
+    if answer.strip().lower() == correct_answer.strip().lower():
+        # If correct, increment the score in the session
+        session["score"] = session.get("score", 0) + 1
+        return True, ""
+    else:
+        # If incorrect, return an error message
+        return False, "Sorry, that's incorrect. The correct answer is {}".format(correct_answer)
 
 
 def get_next_question(current_question_id):
