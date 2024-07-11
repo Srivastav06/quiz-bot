@@ -48,5 +48,13 @@ def generate_final_response(session):
     Creates a final result message including a score based on the answers
     by the user for questions in the PYTHON_QUESTION_LIST.
     '''
+    correct_answers = session.get("correct_answers", [])
+    total_questions = len(PYTHON_QUESTION_LIST)
+    score = len(correct_answers)
 
-    return "dummy result"
+    if score == total_questions:
+        result_message = "Congratulations! You got all {} questions correct!".format(total_questions)
+    else:
+        result_message = "You scored {}/{}.".format(score, total_questions)
+
+    return result_message
