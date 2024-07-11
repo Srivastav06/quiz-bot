@@ -39,8 +39,14 @@ def get_next_question(current_question_id):
     '''
     Fetches the next question from the PYTHON_QUESTION_LIST based on the current_question_id.
     '''
-
-    return "dummy question", -1
+    if current_question_id is None:
+        return PYTHON_QUESTION_LIST[0][0], 0
+    else:
+        next_question_id = current_question_id + 1
+        if next_question_id < len(PYTHON_QUESTION_LIST):
+            return PYTHON_QUESTION_LIST[next_question_id][0], next_question_id
+        else:
+            return None, -1
 
 
 def generate_final_response(session):
