@@ -27,12 +27,17 @@ def generate_bot_responses(message, session):
 
     return bot_responses
 
-
 def record_current_answer(answer, current_question_id, session):
     '''
     Validates and stores the answer for the current question to django session.
     '''
-    return True, ""
+    correct_answer = PYTHON_QUESTION_LIST[current_question_id][1]
+
+    if answer.strip().lower() == correct_answer.strip().lower():
+        session["score"] = session.get("score", 0) + 1
+        return True, ""
+    else:
+        return True, "Sorry, that's incorrect. The correct answer is {}".format(correct_answer) 
 
 
 def get_next_question(current_question_id):
